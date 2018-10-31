@@ -1,12 +1,12 @@
 #!/bin/bash
 source config
 #Download image
-wget https://cloud-images.ubuntu.com/xenial/current/xenial-server-cloudimg-amd64-disk1.img
+wget $IMAGE_URL
 #Upload base image to pool
 #can't create and upload an image in one go, first we must create a dummy volume
 virsh -c $CONNECTION vol-create-as $POOL $IMAGE 1 --format raw
 #then upload the image
-virsh -c $CONNECTION vol-upload --pool $POOL $IMAGE xenial-server-cloudimg-amd64-disk1.img
+virsh -c $CONNECTION vol-upload --pool $POOL $IMAGE $IMAGE
 virsh -c $CONNECTION pool-refresh $POOL
 #Copy and resize disk for instance
 #virsh -c $CONNECTION vol-clone --pool $POOL $INSTANCE_NAME
