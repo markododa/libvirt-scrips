@@ -1,4 +1,5 @@
 #cloud-config
+manage_etc_hosts: false
 hostname: INSTANCE_NAME
 users:
   - name: root
