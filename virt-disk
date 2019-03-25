@@ -1,7 +1,7 @@
 #!/bin/bash
 source config
 #Download image
-wget $IMAGE_URL
+wget -c $IMAGE_URL
 #Upload base image to pool
 #can't create and upload an image in one go, first we must create a dummy volume
 virsh -c $CONNECTION vol-create-as $POOL $IMAGE 1 --format raw
