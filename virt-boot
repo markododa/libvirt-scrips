@@ -10,4 +10,5 @@ virsh -c $CONNECTION vol-clone --pool $POOL --vol $IMAGE --newname $INSTANCE_NAM
 virsh -c $CONNECTION vol-resize $INSTANCE_NAME.img $SIZE --pool $POOL
 virt-install --connect $CONNECTION -n $INSTANCE_NAME --import --disk vol=$POOL/$INSTANCE_NAME.img,bus=virtio  --memory $MEM --virt-type kvm --disk vol=$POOL/$INSTANCE_NAME-config.iso,device=cdrom --os-variant $OS_VARIANT
 virsh -c $CONNECTION net-dhcp-leases default|grep $INSTANCE_NAME
+virsh -c $CONNECTION autostart $INSTANCE_NAME
 fi
