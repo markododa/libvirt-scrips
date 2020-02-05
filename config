@@ -14,9 +14,9 @@ SIZE='10G'
 #Set memory with in megabytes
 MEM='1024'
 apt install libvirt-daemon-system libvirt-clients virtinst xorriso --no-install-recommends
-if [ ! -f $PUBKEY_PATH]; then
+if [ ! -f $PUBKEY_PATH ]; then
 ssh-keygen
 fi
-PUBKEY=$(<~$PUBKEY_PATH)
+PUBKEY=$(<$PUBKEY_PATH)
 MKISOCMD=$(which mkisofs || which xorrisofs)
 IMAGE=${IMAGE_URL##*/)
