@@ -19,4 +19,4 @@ ssh-keygen
 fi
 PUBKEY=$(<$PUBKEY_PATH)
 MKISOCMD=$(which mkisofs || which xorrisofs)
-IMAGE=${IMAGE_URL##*/)
+IMAGE=${IMAGE_URL##*/}
