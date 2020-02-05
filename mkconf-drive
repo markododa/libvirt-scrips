@@ -14,7 +14,7 @@ sed -i s/INSTANCE_NAME/$INSTANCE_NAME/ $config_drive/openstack/latest/meta_data.
 sed -i s/INSTANCE_NAME/$INSTANCE_NAME/ $config_drive/openstack/latest/user_data
 sed  -i s"#SSH_KEY#$PUBKEY#" $config_drive/openstack/latest/user_data
 $MKISOCMD -J -r -V config-2 -o /tmp/$INSTANCE_NAME-config.iso /tmp/$INSTANCE_NAME-config_drive
-rm -rf /tmp/$INSTANCE_NAME-config_drive
+#rm -rf /tmp/$INSTANCE_NAME-config_drive
 virsh -c $CONNECTION vol-create-as --pool $POOL $INSTANCE_NAME-config.iso 1 --format raw
 virsh -c $CONNECTION vol-upload --pool $POOL $INSTANCE_NAME-config.iso /tmp/$INSTANCE_NAME-config.iso
 else
