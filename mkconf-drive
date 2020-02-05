@@ -19,3 +19,4 @@ virsh -c $CONNECTION vol-create-as --pool $POOL $INSTANCE_NAME-config.iso 1 --fo
 virsh -c $CONNECTION vol-upload --pool $POOL $INSTANCE_NAME-config.iso /tmp/$INSTANCE_NAME-config.iso
 else
 	echo "Config iso already exists"
+fi
