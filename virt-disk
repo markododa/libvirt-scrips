@@ -3,7 +3,7 @@ set -e
 source ${0%/*}/config
 #Download image
 wget -c $IMAGE_URL
-if [ ! -f /var/lib/libvirt/images/$IMAGE]; then
+if [ ! -f /var/lib/libvirt/images/$IMAGE ]; then
 #Upload base image to pool
 #can't create and upload an image in one go, first we must create a dummy volume
 virsh -c $CONNECTION vol-create-as $POOL $IMAGE 1 --format raw
