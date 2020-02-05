@@ -3,7 +3,7 @@ POOL="default"
 #The libvirt connection url
 CONNECTION="qemu:///system"
 config_drive_tmpl="config_drive"
-PUBKEY_PATH="~/.ssh/id_rsa.pub"
+PUBKEY_PATH="$HOME/.ssh/id_rsa.pub"
 #name of image available on libvirt to clone for the instance
 IMAGE_URL="https://cdimage.debian.org/cdimage/openstack/current-9/debian-9-openstack-amd64.qcow2"
 #IMAGE_URL=http://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
