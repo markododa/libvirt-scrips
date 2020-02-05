@@ -1,13 +1,15 @@
+set -e
 #!/bin/bash
-source config
+source ${0%/*}/config
 #Download image
-wget $IMAGE_URL
+wget -c $IMAGE_URL
+if [ ! -f /var/lib/libvirt/images/$IMAGE]; then
 #Upload base image to pool
 #can't create and upload an image in one go, first we must create a dummy volume
 virsh -c $CONNECTION vol-create-as $POOL $IMAGE 1 --format raw
 #then upload the image
 virsh -c $CONNECTION vol-upload --pool $POOL $IMAGE $IMAGE
 virsh -c $CONNECTION pool-refresh $POOL
-#Copy and resize disk for instance
-#virsh -c $CONNECTION vol-clone --pool $POOL $INSTANCE_NAME
-#virsh -c $CONNECTION vol-resize $INSTANCE_NAME $SIZE --pool $POOL
+else
+	echo "Image already exists"
+fi

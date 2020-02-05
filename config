@@ -1,16 +1,21 @@
 #the libvirt storage pool where the iso will be uploaded
-POOL=default
+POOL='default'
 #The libvirt connection url
 CONNECTION='qemu:///system'
-config_drive_tmpl=config_drive
-PUBKEY=`<~/.ssh/id_rsa.pub`
-MKISOCMD=`which mkisofs || which xorrisofs`
-#name of image available on libvirt to clone for the instance
-IMAGE_URL=https://cdimage.debian.org/cdimage/openstack/current-9/debian-9-openstack-amd64.qcow2
-IMAGE=debian-9-openstack-amd64.qcow2
-#virt-install lets you set the operating system of the  image, so that it can set up the best virtual hardware for it, check the list of available machines with 'osinfo-query os'
-OS_VARIANT=ubuntu16.04
+config_drive_tmpl='config_drive'
+PUBKEY_PATH='~/.ssh/id_rsa.pub'
 #Set disk size with unit
-SIZE=10G
+SIZE='10G'
 #Set memory with in megabytes
-MEM=1024
+MEM='1024'
+#virt-install lets you set the operating system of the  image, so that it can set up the best virtual hardware for it, check the list of available machines with 'osinfo-query os'
+OS_VARIANT='ubuntu16.04'
+IMAGE_URL='https://cdimage.debian.org/cdimage/openstack/current-9/debian-9-openstack-amd64.qcow2'
+#IMAGE_URL=http://cloud-images.ubuntu.com/bionic/current/bionic-server-cloudimg-amd64.img
+apt install libvirt-daemon-system libvirt-clients virtinst -xorriso -no-install-recommends
+if [ ! -f $PUBKEY_PATH]; then
+ssh-keygen
+fi
+PUBKEY=$(<~$PUBKEY_PATH)
+MKISOCMD=$(which mkisofs || which xorrisofs)
+IMAGE=${IMAGE_URL##*/)

@@ -1,10 +1,11 @@
+set -e
 if [ -z "$1" ]
 then 
 echo "Reads first argument as name of the instance for which it will create a config drive"
+exit 1
 fi
-if [ -n "$1" ]
-then
-source ./config
+source ${0%/*}/config
+if [ ! -f /var/lib/libvirt/images/$INSTANCE_NAME-config.iso ]; then
 INSTANCE_NAME=$1
 cp -R $config_drive_tmpl /tmp/$INSTANCE_NAME-config_drive
 config_drive=/tmp/$INSTANCE_NAME-config_drive
@@ -13,7 +14,8 @@ sed -i s/INSTANCE_NAME/$INSTANCE_NAME/ $config_drive/openstack/latest/meta_data.
 sed -i s/INSTANCE_NAME/$INSTANCE_NAME/ $config_drive/openstack/latest/user_data
 sed  -i s"#SSH_KEY#$PUBKEY#" $config_drive/openstack/latest/user_data
 $MKISOCMD -J -r -V config-2 -o /tmp/$INSTANCE_NAME-config.iso /tmp/$INSTANCE_NAME-config_drive
-#rm -rf /tmp/$INSTANCE_NAME-config_drive
+rm -rf /tmp/$INSTANCE_NAME-config_drive
 virsh -c $CONNECTION vol-create-as --pool $POOL $INSTANCE_NAME-config.iso 1 --format raw
 virsh -c $CONNECTION vol-upload --pool $POOL $INSTANCE_NAME-config.iso /tmp/$INSTANCE_NAME-config.iso
-fi
+else
+	echo "Config iso already exists"
